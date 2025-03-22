@@ -87,12 +87,12 @@ const matchStore = useMatchStore();
 const { matches } = storeToRefs(matchStore);
 const selectedMatch = ref(null);
 
-// Funkcja do formatowania daty
+
 const formatDate = (dateString) => {
   return format(parseISO(dateString), 'dd.MM.yyyy HH:mm');
 };
 
-// Funkcja do wyświetlania szczegółów meczu
+
 const showMatchDetails = (match) => {
   selectedMatch.value = match;
 };

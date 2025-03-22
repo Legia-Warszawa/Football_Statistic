@@ -34,6 +34,9 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import '@ionic/vue/css/core.css'; 
+
+
 const app = createApp(App)
   .use(createPinia())
   .use(IonicVue)
