@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import HomePage from '../views/HomePage.vue'  ;
 import MatchesPage from '../views/MatchesPage.vue';
 import TabsPage from '@/views/TabsPage.vue';
+import Bundesliga from '@/views/Bundesliga.vue';
 
 
 const routes =[
@@ -20,7 +21,7 @@ const routes =[
     },
     {
       path: 'Bundesliga',
-      component: HomePage
+      component: Bundesliga
     },
     {
       path: 'Matches',
