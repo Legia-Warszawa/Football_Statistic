@@ -1,21 +1,67 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
+    <ion-header>
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title>Mecze Bundesliga</ion-title>
       </ion-toolbar>
     </ion-header>
+    <ion-content>
+      <ion-list v-if="matches?.length">
+        <ion-item v-for="match in matches" :key="match.matchID" @click="showMatchDetails(match)">
+          <ion-label>
+            <h2>
+              <img :src="match.team1?.teamIconUrl" alt="Logo drużyny 1" class="team-logo" />
+              {{ match.team1?.teamName ?? "Nieznana drużyna" }} 
+              vs 
+              <img :src="match.team2?.teamIconUrl" alt="Logo drużyny 2" class="team-logo" />
+              {{ match.team2?.teamName ?? "Nieznana drużyna" }}
+            </h2>
+            <p>
+              Wynik: 
+              {{ match.matchResults?.[0]?.pointsTeam1 ?? "?" }} - 
+              {{ match.matchResults?.[0]?.pointsTeam2 ?? "?" }}
+            </p>
+            <p>Data meczu: {{ formatDate(match.matchDateTime) }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-text v-else>
+        <p>Brak danych do wyświetlenia.</p>
+      </ion-text>
 
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Bundesliga</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <div id="container">
-        <strong>In Progressss</strong>
-      </div>
+ 
+      <ion-modal :is-open="selectedMatch !== null" @didDismiss="selectedMatch = null">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Szczegóły meczu</ion-title>
+            <ion-buttons slot="end">
+              <ion-button @click="selectedMatch = null">Zamknij</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <div v-if="selectedMatch">
+            <h2>
+              <img :src="selectedMatch.team1?.teamIconUrl" alt="Logo drużyny 1" class="team-logo" />
+              {{ selectedMatch.team1?.teamName ?? "Nieznana drużyna" }} 
+              vs 
+              <img :src="selectedMatch.team2?.teamIconUrl" alt="Logo drużyny 2" class="team-logo" />
+              {{ selectedMatch.team2?.teamName ?? "Nieznana drużyna" }}
+            </h2>
+            <p>
+              Wynik: 
+              {{ selectedMatch.matchResults?.[0]?.pointsTeam1 ?? "?" }} - 
+              {{ selectedMatch.matchResults?.[0]?.pointsTeam2 ?? "?" }}
+            </p>
+            <p>Data meczu: {{ formatDate(selectedMatch.matchDateTime) }}</p>
+            <p>Miejsce: {{ selectedMatch.location?.locationStadium ?? "Nieznane" }}</p>
+            <p>Sezon: {{ selectedMatch.leagueName ?? "Nieznany" }}</p>
+          
+            <p>Grupa: {{ selectedMatch.group?.groupName ?? "Nieznana" }}</p>
+            <p>Status: {{ selectedMatch.matchIsFinished ? "Zakończony" : "W trakcie" }}</p>
+          </div>
+        </ion-content>
+      </ion-modal>
     </ion-content>
   </ion-page>
 </template>
@@ -24,11 +70,11 @@
 import { ref, onMounted, watch } from "vue";
 import { useMatchStore } from "@/stores/matchStore";
 import { storeToRefs } from "pinia";
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonList, IonText, IonModal, IonButtons, IonButton,} from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonList, IonText, IonModal, IonButtons, IonButton,onIonViewWillEnter} from '@ionic/vue';
 import { format, parseISO } from 'date-fns';
-
 const matchStore = useMatchStore();
-const { matchesBundesliga, isLoading } = storeToRefs(matchStore);
+const { matches } = storeToRefs(matchStore);
+const selectedMatch = ref(null);
 
 
 const formatDate = (dateString) => {
@@ -40,13 +86,14 @@ const showMatchDetails = (match) => {
   selectedMatch.value = match;
 };
 
-onMounted(async () => {
-  console.log("🔹 Komponent zamontowany, pobieram mecze Bundesligi...");
-  await matchStore.fetchBundesligaMatches("bl1", "2024", "25");
+
+onIonViewWillEnter(async () => {
+  console.log("🔹 Komponent zamontowany, pobieram mecze...");
+  await matchStore.fetchMatches("bl1", "2024", "26");
 });
 
-watch(matchesBundesliga, (newMatches) => {
-  console.log("🔹 WATCH: Liczba meczy Bundesligi:", newMatches.length);
+watch(matches, (newMatches) => {
+  console.log("🔹 WATCH: Liczba meczy:", newMatches.length);
   newMatches.forEach((match, index) => {
     console.log(`🔹 Mecz ${index + 1}:`, {
       team1: match.team1?.teamName,
@@ -58,31 +105,25 @@ watch(matchesBundesliga, (newMatches) => {
 </script>
 
 <style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+.team-logo {
+  width: 24px;
+  height: 28px;
+  vertical-align: middle;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+ion-modal {
+  --width: 90%;
+  --height: 50%;
+  --border-radius: 10px;
+}
+ul {
+  list-style-type: none;
+  padding-left: 0;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+li {
+  margin-bottom: 8px;
 }
 </style>

@@ -2,11 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Mecze</ion-title>
+        <ion-title>Mecze Liga Mistrzów</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list v-if="matches.length">
+      <ion-list v-if="matches?.length">
         <ion-item v-for="match in matches" :key="match.matchID" @click="showMatchDetails(match)">
           <ion-label>
             <h2>
@@ -28,8 +28,6 @@
       <ion-text v-else>
         <p>Brak danych do wyświetlenia.</p>
       </ion-text>
-
-      <!-- Modal z szczegółami meczu -->
       <ion-modal :is-open="selectedMatch !== null" @didDismiss="selectedMatch = null">
         <ion-header>
           <ion-toolbar>
@@ -56,17 +54,7 @@
             <p>Data meczu: {{ formatDate(selectedMatch.matchDateTime) }}</p>
             <p>Miejsce: {{ selectedMatch.location?.locationStadium ?? "Nieznane" }}</p>
             <p>Sezon: {{ selectedMatch.leagueName ?? "Nieznany" }}</p>
-            <!--
-              <p>Gole:</p>
-                  <ul>
-                    <li v-for="goal in [...selectedMatch.goals].sort((a, b) => a.matchMinute - b.matchMinute)" :key="goal.goalID">
-                      {{ goal.matchMinute }}' - {{ goal.goalGetterName }} 
-                      <span v-if="goal.isOwnGoal">(samobójczy)</span>
-                      <span v-if="goal.isPenalty">(karny)</span>
-                      ({{ goal.scoreTeam1 }} - {{ goal.scoreTeam2 }})
-                    </li>
-                  </ul>
-            -->    
+          
             <p>Grupa: {{ selectedMatch.group?.groupName ?? "Nieznana" }}</p>
             <p>Status: {{ selectedMatch.matchIsFinished ? "Zakończony" : "W trakcie" }}</p>
           </div>
@@ -80,7 +68,7 @@
 import { ref, onMounted, watch } from "vue";
 import { useMatchStore } from "@/stores/matchStore";
 import { storeToRefs } from "pinia";
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonList, IonText, IonModal, IonButtons, IonButton,} from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonList, IonText, IonModal, IonButtons, IonButton,onIonViewWillEnter} from '@ionic/vue';
 import { format, parseISO } from 'date-fns';
 
 const matchStore = useMatchStore();
@@ -97,7 +85,8 @@ const showMatchDetails = (match) => {
   selectedMatch.value = match;
 };
 
-onMounted(async () => {
+
+onIonViewWillEnter(async () => {
   console.log("🔹 Komponent zamontowany, pobieram mecze...");
   await matchStore.fetchMatches("ucl24", "2024", "11");
 });
