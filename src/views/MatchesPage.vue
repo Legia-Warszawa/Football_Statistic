@@ -18,8 +18,8 @@
             </h2>
             <p>
               Wynik: 
-              {{ match.matchResults?.[0]?.pointsTeam1 ?? "?" }} - 
-              {{ match.matchResults?.[0]?.pointsTeam2 ?? "?" }}
+              {{ match.matchResults?.[1]?.pointsTeam1 ?? "?" }} - 
+              {{ match.matchResults?.[1]?.pointsTeam2 ?? "?" }}
             </p>
             <p>Data meczu: {{ formatDate(match.matchDateTime) }}</p>
           </ion-label>
@@ -28,38 +28,8 @@
       <ion-text v-else>
         <p>Brak danych do wyświetlenia.</p>
       </ion-text>
-      <ion-modal :is-open="selectedMatch !== null" @didDismiss="selectedMatch = null">
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Szczegóły meczu</ion-title>
-            <ion-buttons slot="end">
-              <ion-button @click="selectedMatch = null">Zamknij</ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-          <div v-if="selectedMatch">
-            <h2>
-              <img :src="selectedMatch.team1?.teamIconUrl" alt="Logo drużyny 1" class="team-logo" />
-              {{ selectedMatch.team1?.teamName ?? "Nieznana drużyna" }} 
-              vs 
-              <img :src="selectedMatch.team2?.teamIconUrl" alt="Logo drużyny 2" class="team-logo" />
-              {{ selectedMatch.team2?.teamName ?? "Nieznana drużyna" }}
-            </h2>
-            <p>
-              Wynik: 
-              {{ selectedMatch.matchResults?.[0]?.pointsTeam1 ?? "?" }} - 
-              {{ selectedMatch.matchResults?.[0]?.pointsTeam2 ?? "?" }}
-            </p>
-            <p>Data meczu: {{ formatDate(selectedMatch.matchDateTime) }}</p>
-            <p>Miejsce: {{ selectedMatch.location?.locationStadium ?? "Nieznane" }}</p>
-            <p>Sezon: {{ selectedMatch.leagueName ?? "Nieznany" }}</p>
-          
-            <p>Grupa: {{ selectedMatch.group?.groupName ?? "Nieznana" }}</p>
-            <p>Status: {{ selectedMatch.matchIsFinished ? "Zakończony" : "W trakcie" }}</p>
-          </div>
-        </ion-content>
-      </ion-modal>
+      
+      <MatchDetails v-if="selectedMatch" :match="selectedMatch" @close="selectedMatch = null" />
     </ion-content>
   </ion-page>
 </template>
@@ -70,6 +40,8 @@ import { useMatchStore } from "@/stores/matchStore";
 import { storeToRefs } from "pinia";
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonList, IonText, IonModal, IonButtons, IonButton,onIonViewWillEnter} from '@ionic/vue';
 import { format, parseISO } from 'date-fns';
+import MatchDetails from "@/components/MatchDetails.vue";
+
 
 const matchStore = useMatchStore();
 const { matches } = storeToRefs(matchStore);
