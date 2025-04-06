@@ -11,6 +11,10 @@
             <ion-icon :icon="footballOutline" />
             <ion-label>Bundesliga</ion-label>
           </ion-tab-button>
+          <ion-tab-button tab="America" href="/tabs/America">
+            <ion-icon :icon="footballOutline" />
+            <ion-label>America</ion-label>
+          </ion-tab-button>
         </ion-tab-bar>
       </ion-tabs>
     </ion-page>

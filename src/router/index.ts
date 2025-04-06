@@ -4,6 +4,7 @@ import HomePage from '../views/HomePage.vue'  ;
 import MatchesPage from '../views/MatchesPage.vue';
 import TabsPage from '@/views/TabsPage.vue';
 import Bundesliga from '@/views/Bundesliga.vue';
+import America from '@/views/America.vue';
 
 
 const routes =[
@@ -26,6 +27,10 @@ const routes =[
     {
       path: 'Matches',
       component: MatchesPage
+    },
+    {
+      path: 'America',
+      component: America
     }
   ]
 }  
