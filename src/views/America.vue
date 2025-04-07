@@ -70,7 +70,7 @@
   
   onIonViewWillEnter(async () => {
     console.log("🔹 Komponent zamontowany, pobieram mecze...");
-    await matchStore.fetchMatches("CA2024", "2024", "6");
+    await matchStore.fetchMatches("CA2024", "2024", null);
   });
   
   watch(matches, (newMatches) => {
