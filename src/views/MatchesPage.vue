@@ -8,7 +8,7 @@
 
     <ion-content>
       <div class="layout-container">
-        <!-- Lewy panel z przyciskami kolejek -->
+   
         <div class="sidebar">
           <h3>Kolejki</h3>
           <div class="matchday-buttons">
