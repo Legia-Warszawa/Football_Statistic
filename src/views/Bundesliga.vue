@@ -42,6 +42,13 @@
                 </p>
                 <p>Data meczu: {{ formatDate(match.matchDateTime) }}</p>
               </ion-label>
+              <ion-button
+                slot="end"
+                :color="isInComparisonList(match) ? 'success' : 'danger'"
+                @click.stop="toggleComparison(match)"
+              >
+                {{ isInComparisonList(match) ? 'Usuń z porównania' : 'Dodaj do porównania' }}
+              </ion-button>
             </ion-item>
           </ion-list>
 
@@ -108,6 +115,21 @@ const selectMatchDay = async (day) => {
 onIonViewWillEnter(async () => {
   await loadMatches();
 });
+
+const comparisonList = ref(JSON.parse(localStorage.getItem('comparisonList')) || []);
+
+const isInComparisonList = (match) => {
+  return comparisonList.value.some((item) => item.matchID === match.matchID);
+};
+
+const toggleComparison = (match) => {
+  if (isInComparisonList(match)) {
+    comparisonList.value = comparisonList.value.filter((item) => item.matchID !== match.matchID);
+  } else {
+    comparisonList.value.push(match);
+  }
+  localStorage.setItem('comparisonList', JSON.stringify(comparisonList.value));
+};
 </script>
 
 <style scoped>
