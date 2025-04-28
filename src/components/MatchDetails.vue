@@ -64,7 +64,7 @@
             <ion-item>
               <ion-label>
                 <h3>Kolejka</h3>
-                <p>{{ match.group?.groupName ?? "Nieznana" }}</p>
+                <p>{{ translateGroupName(match.group?.groupName ?? "Nieznana") }}</p>
               </ion-label>
             </ion-item>
           </ion-col>
@@ -104,6 +104,7 @@ import {
 } from "@ionic/vue";
 import { format, parseISO } from "date-fns";
 import { pl } from "date-fns/locale";
+import { translateGroupName } from "@/utils/groupNames"; // Importujemy funkcję z pliku
 
 const props = defineProps({
   match: {
