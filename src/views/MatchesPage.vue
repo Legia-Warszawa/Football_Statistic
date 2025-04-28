@@ -2,7 +2,15 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Mecze Liga Mistrzów</ion-title>
+        <ion-title>Mecze Liga Mistrzów
+          <button 
+            class="custom-button large-button" 
+            @click="showCompareModal = true" 
+            v-if="comparisonList.length"
+          >
+            <span>🔍 Porównaj wybrane mecze ({{ comparisonList.length }})</span>
+          </button>
+        </ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -28,6 +36,14 @@
             <p>Ładowanie meczów...</p>
           </div>
 
+          <button 
+            class="custom-button large-button" 
+            @click="showCompareModal = true" 
+            v-if="comparisonList.length"
+          >
+            <span>🔍 Porównaj wybrane mecze ({{ comparisonList.length }})</span>
+          </button>
+
           <ion-list v-if="matches?.length">
             <ion-item
               v-for="match in matches"
@@ -48,7 +64,7 @@
 
               <ion-button
                 slot="end"
-                :color="isInComparisonList(match) ? 'success' : 'danger'"
+                :color="isInComparisonList(match) ? 'danger' : 'success'"
                 :class="{ pulse: isAnimating(match.matchID) }"
                 @click.stop="toggleComparison(match)"
               >
@@ -64,10 +80,6 @@
             :matches="comparisonList"
             @close="showCompareModal = false"
           />
-
-          <ion-button expand="block" color="primary" @click="showCompareModal = true" v-if="comparisonList.length">
-            🔍 Porównaj wybrane mecze ({{ comparisonList.length }})
-          </ion-button>
 
           <ion-text v-else>
             <p>Brak danych do wyświetlenia.</p>
@@ -175,17 +187,19 @@ const toggleComparison = (match) => {
 
 .sidebar {
   width: 200px;
-  border: 1px solid #a3c2f2;
+  /* border: 1px solid #a3c2f2; */
+  border: none;
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 4px 12px rgba(76, 141, 255, 0.15);
 }
 
 .sidebar h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: #3366cc;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 19px;
+  color: #ccc233;
+  text-align: center;
 }
 
 .matchday-buttons {
@@ -195,7 +209,7 @@ const toggleComparison = (match) => {
 }
 
 .matchday-buttons button {
-  background-color: #93aed6;
+  background-color: #ff595e;
   border: none;
   border-radius: 8px;
   padding: 8px 12px;
@@ -207,12 +221,12 @@ const toggleComparison = (match) => {
 }
 
 .matchday-buttons button:hover {
-  background-color: #b3d1ff;
+  background-color: #ffca3a;
   transform: scale(1.03);
 }
 
 .matchday-buttons button.active {
-  background-color: #4c8dff;
+  background-color: #8ac926;
   color: #ffffff;
   font-weight: bold;
 }
@@ -254,5 +268,35 @@ const toggleComparison = (match) => {
   .sidebar {
     width: 100%;
   }
+}
+
+.custom-button {
+  display: inline-block;
+  width: 100%; /* Adjust width as needed */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #003366;
+  background-color: #ff595e;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.custom-button:hover {
+  background-color: #ffca3a;
+  color: grey;
+}
+
+.custom-button span {
+  display: inline-block;
+  transition: transform 0.2s ease; /* Smooth scaling */
+}
+
+.custom-button:hover span {
+  transform: scale(1.9); /* Scale the text */
 }
 </style>
