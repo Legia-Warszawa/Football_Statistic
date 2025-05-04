@@ -12,9 +12,22 @@
     <ion-content class="ion-padding">
       <div v-if="match" class="match-header">
         <div class="team-info">
+        <div class="team-header">
           <img :src="match.team1?.teamIconUrl" alt="Logo drużyny 1" class="team-logo" />
-          <span class="team-name">{{ match.team1?.teamName ?? "Nieznana drużyna" }}</span>
+          <ion-button
+              fill="clear"
+              size="small"
+              @click="toggleFavorite(match.team1)"
+            >
+              <ion-icon
+                :icon="isFavorite(match.team1?.teamId) ? heart : heartOutline"
+                slot="icon-only"
+                color="danger"
+              />
+            </ion-button>
         </div>
+        <span class="team-name">{{ match.team1?.teamName ?? "Nieznana drużyna" }}</span>
+      </div>
 
         <div class="match-score">
           <div class="score-box">
@@ -26,8 +39,21 @@
         </div>
 
         <div class="team-info">
-          <img :src="match.team2?.teamIconUrl" alt="Logo drużyny 2" class="team-logo" />
-          <span class="team-name">{{ match.team2?.teamName ?? "Nieznana drużyna" }}</span>
+          <div class="team-header">
+            <img :src="match.team2?.teamIconUrl" alt="Logo drużyny 1" class="team-logo" />
+            <ion-button
+              fill="clear"
+              size="small"
+              @click="toggleFavorite(match.team2)"
+            >
+              <ion-icon
+                :icon="isFavorite(match.team2?.teamId) ? heart : heartOutline"
+                slot="icon-only"
+                color="danger"
+              />
+            </ion-button>
+          </div>
+          <span class="team-name">{{ match.team1?.teamName ?? "Nieznana drużyna" }}</span>
         </div>
       </div>
 
@@ -97,11 +123,14 @@
 
 <script setup>
 import { computed, watch } from "vue";
+import { ref,onMounted } from "vue";
 import {
   IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton,
   IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonList,
   IonListHeader, IonText
 } from "@ionic/vue";
+import { heart,heartOutline } from 'ionicons/icons';
+
 import { format, parseISO } from "date-fns";
 import { pl } from "date-fns/locale";
 import { translateGroupName } from "@/utils/groupNames"; // Importujemy funkcję z pliku
@@ -114,6 +143,43 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["close"]);
+const FAVORITES_KEY = 'favoriteTeams';
+const favoriteTeams = ref(new Set());
+
+const loadFavorites = () => {
+  const saved = localStorage.getItem(FAVORITES_KEY);
+  if (saved) {
+    try {
+      favoriteTeams.value = new Set(JSON.parse(saved));
+    } catch (e) {
+      console.error("Błąd odczytu favoriteTeams z localStorage", e);
+    }
+  }
+};
+
+const saveFavorites = () => {
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favoriteTeams.value]));
+};
+
+const isFavorite = (teamId) => favoriteTeams.value.has(teamId);
+
+const toggleFavorite = (team) => {
+  if (!team?.teamId) return;
+  const id = team.teamId;
+  if (favoriteTeams.value.has(id)) {
+    favoriteTeams.value.delete(id);
+    console.log(`❌ Usunięto z ulubionych: ${team.teamName} (ID: ${id})`);
+  } else {
+    favoriteTeams.value.add(id);
+    console.log(`💖 Dodano do ulubionych: ${team.teamName} (ID: ${id})`);
+  }
+  saveFavorites(); 
+};
+
+onMounted(() => {
+  loadFavorites(); 
+});
+
 
 console.log("🏁 Komponent załadowany!");
 console.log("📊 Otrzymane dane meczu:", props.match);
@@ -173,6 +239,11 @@ watch(() => props.match, (newMatch, oldMatch) => {
 .team-name {
   font-weight: 500;
   text-align: center;
+}
+.team-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .match-score {
