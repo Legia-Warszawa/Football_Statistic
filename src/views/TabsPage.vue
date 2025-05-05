@@ -15,6 +15,10 @@
             <ion-icon :icon="footballOutline" />
             <ion-label>America</ion-label>
           </ion-tab-button>
+          <ion-tab-button tab="favorites" href="/tabs/favorites">
+            <ion-icon :icon="starOutline" />
+            <ion-label>Ulubione</ion-label>
+          </ion-tab-button>
         </ion-tab-bar>
       </ion-tabs>
     </ion-page>
@@ -22,6 +26,6 @@
   
   <script setup>
   import { IonPage, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/vue';
-  import { footballOutline, settingsOutline } from 'ionicons/icons';
+  import { footballOutline, settingsOutline, starOutline } from 'ionicons/icons';
   </script>
   

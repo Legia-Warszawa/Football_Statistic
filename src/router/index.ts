@@ -5,6 +5,7 @@ import MatchesPage from '../views/MatchesPage.vue';
 import TabsPage from '@/views/TabsPage.vue';
 import Bundesliga from '@/views/Bundesliga.vue';
 import America from '@/views/America.vue';
+import FavoritesPage from '@/views/FavoritesPage.vue';
 
 
 const routes =[
@@ -31,6 +32,9 @@ const routes =[
     {
       path: 'America',
       component: America
+    },
+    { path: 'Favorites',
+      component: FavoritesPage
     }
   ]
 }  

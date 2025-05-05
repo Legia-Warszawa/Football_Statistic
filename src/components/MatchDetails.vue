@@ -53,7 +53,7 @@
               />
             </ion-button>
           </div>
-          <span class="team-name">{{ match.team1?.teamName ?? "Nieznana drużyna" }}</span>
+          <span class="team-name">{{ match.team2?.teamName ?? "Nieznana drużyna" }}</span>
         </div>
       </div>
 
