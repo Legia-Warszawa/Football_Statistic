@@ -47,7 +47,8 @@
   </template>
   
   <script setup>
-  import { onMounted, onUnmounted, ref } from 'vue';
+ import { onMounted, ref } from 'vue';
+ import { onIonViewWillEnter } from '@ionic/vue';
   import {
     IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
     IonList, IonItem, IonAvatar, IonLabel, IonText, IonButton, IonIcon
@@ -136,10 +137,11 @@
     loadFavorites(); // załaduj ponownie dane z localStorage
   };
   
-  onMounted(() =>{
-    console.log("🏁 Komponent ulubionych drużyn załadowany!");
-    loadFavorites(); // załaduj dane przy montowaniu komponentu
-  });
+  onIonViewWillEnter(() => {
+  console.log("🚪 Strona wchodzi – odświeżam ulubione drużyny");
+  loadFavorites();
+});
+
   </script>
   
   <style scoped>
