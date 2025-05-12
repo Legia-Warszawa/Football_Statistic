@@ -2,15 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Mecze Liga Mistrzów
-          <button 
-            class="custom-button large-button" 
-            @click="showCompareModal = true" 
-            v-if="comparisonList.length"
-          >
-            <span>🔍 Porównaj wybrane mecze ({{ comparisonList.length }})</span>
-          </button>
-        </ion-title>
+        <ion-title>Mecze Liga Mistrzów</ion-title>
       </ion-toolbar>
     </ion-header>
 

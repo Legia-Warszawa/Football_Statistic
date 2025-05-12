@@ -44,7 +44,7 @@
               </ion-label>
               <ion-button
                 slot="end"
-                :color="isInComparisonList(match) ? 'success' : 'danger'"
+                :color="isInComparisonList(match) ? 'danger' : 'success'"
                 @click.stop="toggleComparison(match)"
               >
                 {{ isInComparisonList(match) ? 'Usuń z porównania' : 'Dodaj do porównania' }}
@@ -142,21 +142,20 @@ const toggleComparison = (match) => {
 
 .sidebar {
   width: 200px;
-  border: 1px solid #a3c2f2;
-  border-radius: 12px;
+  border: none;
+  border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 12px rgba(76, 141, 255, 0.15);
 }
 
 .sidebar h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #3366cc;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 19px;
+  color: #ccc233;
+  text-align: center;
 }
+
 
 .matchday-buttons {
   display: flex;
@@ -165,26 +164,25 @@ const toggleComparison = (match) => {
 }
 
 .matchday-buttons button {
-  background-color: #93aed6;
+  background-color: #ff595e; /* Kolor tła */
   border: none;
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
-  text-align: left;
   transition: background-color 0.2s, transform 0.2s;
-  color: #003366;
+  color: #003366; /* Kolor tekstu */
   font-weight: 500;
 }
 
 .matchday-buttons button:hover {
-  background-color: #b3d1ff;
-  transform: scale(1.03);
+  background-color: #ffca3a; /* Kolor tła po najechaniu */
+  transform: scale(1.03); /* Powiększenie przy najechaniu */
 }
 
 .matchday-buttons button.active {
-  background-color: #4c8dff;
-  color: #ffffff;
+  background-color: #8ac926; /* Kolor aktywnego przycisku */
+  color: #ffffff; /* Kolor tekstu aktywnego przycisku */
   font-weight: bold;
 }
 
