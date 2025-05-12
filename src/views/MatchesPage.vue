@@ -179,7 +179,6 @@ const toggleComparison = (match) => {
 
 .sidebar {
   width: 200px;
-  /* border: 1px solid #a3c2f2; */
   border: none;
   border-radius: 12px;
   padding: 1rem;
