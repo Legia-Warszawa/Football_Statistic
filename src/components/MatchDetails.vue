@@ -133,7 +133,7 @@ import { heart,heartOutline } from 'ionicons/icons';
 
 import { format, parseISO } from "date-fns";
 import { pl } from "date-fns/locale";
-import { translateGroupName } from "@/utils/groupNames"; // Importujemy funkcję z pliku
+import { translateGroupName } from "@/utils/groupNames"; 
 
 const props = defineProps({
   match: {

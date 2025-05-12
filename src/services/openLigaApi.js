@@ -4,7 +4,7 @@ const API_BASE_URL = "https://api.openligadb.de";
 
 export const getMatches = async (league, year, matchDay) => {
   if (!league || !year) {
-    console.error("❌ Nieprawidłowe parametry: league i year są wymagane");
+    console.error(" Nieprawidłowe parametry: league i year są wymagane");
     return [];
   }
 
@@ -14,17 +14,17 @@ export const getMatches = async (league, year, matchDay) => {
   }
 
   try {
-    console.log("🌍 Pobieranie danych z:", url);
+    console.log(" Pobieranie danych z:", url);
     const response = await axios.get(url, { timeout: 10000 });
-    console.log("✅ Pobrane mecze:", response.data);
+    console.log(" Pobrane mecze:", response.data);
     return response.data;
   } catch (error) {
     if (axios.isCancel(error)) {
       console.error("⏳ Żądanie anulowane:", error.message);
     } else if (error.code === "ECONNABORTED") {
-      console.error("⚠️ Timeout - serwer nie odpowiedział na czas!");
+      console.error("Timeout - serwer nie odpowiedział na czas!");
     } else {
-      console.error("❌ Błąd pobierania danych:", error);
+      console.error(" Błąd pobierania danych:", error);
     }
     return [];
   }

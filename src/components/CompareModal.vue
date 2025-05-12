@@ -20,7 +20,7 @@
       </ion-button>
 
       <div class="comparison-table">
-        <!-- Nagłówki drużyn -->
+      
         <div class="comparison-row header-row">
           <div class="comparison-cell header-cell">Parametr</div>
           <div
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <!-- Wiersze szczegółów -->
+       
         <div class="comparison-row" v-for="(row, index) in detailsRows" :key="index">
           <div class="comparison-cell parameter-cell">
             {{ row.label }}
@@ -69,12 +69,12 @@ import {
   IonButton,
   IonContent,
 } from "@ionic/vue";
-import { translateGroupName } from "@/utils/groupNames";  // Zaimportuj funkcję tłumaczenia
+import { translateGroupName } from "@/utils/groupNames"; 
 
 const props = defineProps({
   isOpen: Boolean,
   matches: Array,
-  translateGroupName: Function, // dodaj translateGroupName jako prop
+  translateGroupName: Function, 
 });
 
 const emit = defineEmits(["close"]);
@@ -103,7 +103,7 @@ const getFlashscoreLink = (teamName) => {
   return `https://www.flashscore.pl/druzyna/${formattedName}/`;
 };
 
-// Dane do porównania
+
 const detailsRows = [
   {
     label: "Wynik",

@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Mecze Bundesliga</ion-title>
+        <ion-title style="text-align: center ">Mecze Bundesliga</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -90,7 +90,7 @@ const matchStore = useMatchStore();
 const { matches } = storeToRefs(matchStore);
 const selectedMatch = ref(null);
 const loading = ref(false);
-const selectedMatchDay = ref("26"); // domyślnie 26 kolejka
+const selectedMatchDay = ref("26"); 
 const matchDays = Array.from({ length: 34 }, (_, i) => `${i + 1}`);
 
 const formatDate = (dateString) => {
@@ -164,25 +164,25 @@ const toggleComparison = (match) => {
 }
 
 .matchday-buttons button {
-  background-color: #ff595e; /* Kolor tła */
+  background-color: #ff595e; 
   border: none;
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
-  color: #003366; /* Kolor tekstu */
+  color: #003366; 
   font-weight: 500;
 }
 
 .matchday-buttons button:hover {
-  background-color: #ffca3a; /* Kolor tła po najechaniu */
-  transform: scale(1.03); /* Powiększenie przy najechaniu */
+  background-color: #ffca3a; 
+  transform: scale(1.03); 
 }
 
 .matchday-buttons button.active {
-  background-color: #8ac926; /* Kolor aktywnego przycisku */
-  color: #ffffff; /* Kolor tekstu aktywnego przycisku */
+  background-color: #8ac926;
+  color: #ffffff;
   font-weight: bold;
 }
 

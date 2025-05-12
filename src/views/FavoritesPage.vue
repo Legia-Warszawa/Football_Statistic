@@ -2,7 +2,7 @@
   <ion-page @click="refreshFavorites">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Ulubione drużyny</ion-title>
+        <ion-title style="text-align: center">Ulubione drużyny</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">

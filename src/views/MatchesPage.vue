@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Mecze Liga Mistrzów</ion-title>
+        <ion-title style="text-align: center;">Mecze Liga Mistrzów</ion-title>
       </ion-toolbar>
     </ion-header>
 

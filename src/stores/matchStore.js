@@ -10,16 +10,16 @@ export const useMatchStore = defineStore("matchStore", () => {
 
     try {
       const data = await getMatches(league, year, matchDay);
-      console.log("✅ Pobrane mecze:", data);
+      console.log("Pobrane mecze:", data);
 
       if (Array.isArray(data)) {
         matches.value = data; 
-        console.log("✅ Mecze ligi", league, "zapisane w store:", matches.value);
+        console.log(" Mecze ligi", league, "zapisane w store:", matches.value);
       } else {
-        console.warn("⚠️ Błąd: Otrzymane dane nie są tablicą!", data);
+        console.warn(" Błąd: Otrzymane dane nie są tablicą!", data);
       }
     } catch (error) {
-      console.error("❌ Błąd pobierania meczów:", error);
+      console.error(" Błąd pobierania meczów:", error);
     }
   };
 
